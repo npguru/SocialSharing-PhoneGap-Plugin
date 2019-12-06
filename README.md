@@ -6,7 +6,7 @@
 [![Twitter Follow][twitter-image]][twitter-url]
 
 [npm-image]:http://img.shields.io/npm/v/cordova-plugin-x-socialsharing.svg
-[npm-url]:https://npmjs.org/package/cordova-plugin-x-socialsharing
+[npm-url]:https://www.npmjs.com/package/cordova-plugin-np-socialsharing
 [downloads-image]:http://img.shields.io/npm/dm/cordova-plugin-x-socialsharing.svg
 [total-downloads-image]:http://img.shields.io/npm/dt/cordova-plugin-x-socialsharing.svg?label=total%20downloads
 [twitter-image]:https://img.shields.io/twitter/follow/eddyverbruggen.svg?style=social&label=Follow%20me
@@ -71,12 +71,12 @@ Windows Phone 8
 SocialSharing is compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman), compatible with [PhoneGap 3.0 CLI](http://docs.phonegap.com/en/3.0.0/guide_cli_index.md.html#The%20Command-line%20Interface_add_features), here's how it works with the CLI:
 
 ```
-$ phonegap local plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
+$ phonegap local plugin add https://github.com/npguru/SocialSharing-PhoneGap-Plugin.git
 ```
 
 or with Cordova CLI, from npm:
 ```
-$ cordova plugin add cordova-plugin-x-socialsharing
+$ cordova plugin add cordova-plugin-np-socialsharing
 $ cordova prepare
 ```
 
@@ -127,7 +127,7 @@ Window Phone: Copy `SocialSharing.cs` to `platforms/wp8/Plugins/nl.x-services.pl
 ### PhoneGap Build
 Just add the following xml to your `config.xml` to always use the latest version of this plugin (which is published to plugins.cordova.io these days):
 ```xml
-<gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
+<gap:plugin name="cordova-plugin-np-socialsharing" source="npm" />
 ```
 or to use an older version, hosted at phonegap build:
 ```xml
@@ -146,7 +146,7 @@ However, what exactly gets shared, depends on the application the user chooses t
 - Twitter: message, image (other filetypes are not supported), link (which is automatically shortened if the Twitter client deems it necessary).
 - Google+ / Hangouts (Android only): message, subject, link
 - Flickr: message, image (an image is required for this option to show up).
-- Facebook Android: sharing a message is not possible. You can share either a link or an image (not both), but a description can not be prefilled. See [this Facebook issue which they won't solve](https://developers.facebook.com/x/bugs/332619626816423/). As an alternative you can use `shareViaFacebookWithPasteMessageHint` since plugin version 4.3.4. See below for details. Also note that sharing a URL on a non standard domain (like .fail) [may not work on Android](https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin/issues/253). Make sure you test this. You can use a [link shortener](https://goo.gl) to workaround this issue.
+- Facebook Android: sharing a message is not possible. You can share either a link or an image (not both), but a description can not be prefilled. See [this Facebook issue which they won't solve](https://developers.facebook.com/x/bugs/332619626816423/). As an alternative you can use `shareViaFacebookWithPasteMessageHint` since plugin version 4.3.4. See below for details. Also note that sharing a URL on a non standard domain (like .fail) [may not work on Android](https://github.com/npguru/SocialSharing-PhoneGap-Plugin/issues/253). Make sure you test this. You can use a [link shortener](https://goo.gl) to workaround this issue.
 - Facebook iOS: message, image (other filetypes are not supported), link. Beware that since a Fb update in April 2015 sharing a prefilled message is no longer possible when the Fb app is installed (like Android), see #344. Alternative: use `shareViaFacebookWithPasteMessageHint`.
 
 ### Using the share sheet
@@ -346,7 +346,7 @@ window.plugins.socialsharing.share(null, null, 'file:///storage/emulated/0/nl.xs
 window.plugins.socialsharing.share(null, null, 'http://domain.com/image.jpg');
 ```
 
-If you can't get the plugin to work, have a look at [this demo project](https://github.com/EddyVerbruggen/X-Services-PhoneGap-Build-Plugins-Demo).
+If you can't get the plugin to work, have a look at [this demo project](https://github.com/npguru/X-Services-PhoneGap-Build-Plugins-Demo).
 
 #### Notes about the successCallback (you can just ignore the callbacks if you like)
 The plugin passes a boolean to the successCallback to let the app know whether or not content was actually shared, or the share widget was closed by the user.
@@ -459,7 +459,7 @@ Sharing an image (only images from the internet are supported). If you pass more
 
 ## 7. Share-popover on iPad
 
-> This no longer works since plugin version 5.5.0, see [this issue](https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin/issues/1052).
+> This no longer works since plugin version 5.5.0, see [this issue](https://github.com/npguru/SocialSharing-PhoneGap-Plugin/issues/1052).
 
 Carlos Sola-Llonch, a user of this plugin, pointed me at an [iOS document](https://developer.apple.com/library/ios/documentation/uikit/reference/UIActivityViewController_Class/Reference/Reference.html)
 stating "On iPad, you must present the view controller in a popover. On iPhone and iPod touch, you must present it modally."
@@ -548,5 +548,5 @@ This plugin requires permissions to the users photos. Since iOS 10 it is require
 The plugin configures a default description for you. If you do need to customise it, you can set a Cordova variable when installing:
 
 ```
-$ cordova plugin add cordova-plugin-x-socialsharing --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="This app uses your photo library" --variable PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION="This app saves images your photo library"
+$ cordova plugin add cordova-plugin-np-socialsharing --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="This app uses your photo library" --variable PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION="This app saves images your photo library"
 ```
