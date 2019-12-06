@@ -1,15 +1,12 @@
 package nl.xservices.plugins;
 
+import android.content.pm.*;
 import nl.xservices.plugins.*;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.app.Activity;
 import android.content.*;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.pm.LabeledIntent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -31,12 +28,8 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +70,7 @@ public class SocialSharing extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
     this._callbackContext = callbackContext; // only used for onActivityResult
     this.pasteMessage = null;
+
     if (ACTION_AVAILABLE_EVENT.equals(action)) {
       callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
       return true;
@@ -281,7 +275,8 @@ public class SocialSharing extends CordovaPlugin {
               ArrayList<Uri> fileUris = new ArrayList<Uri>();
               Uri fileUri = null;
               for (int i = 0; i < files.length(); i++) {
-                fileUri = getFileUriAndSetType(sendIntent, dir, files.getString(i), subject, i);
+                String filename = sanitizeFilename(getFileName());
+                fileUri = getFileUriAndSetType(sendIntent, dir, files.getString(i), filename, i);
                 fileUri = FileProvider.getUriForFile(webView.getContext(), cordova.getActivity().getPackageName()+".sharing.provider", new File(fileUri.getPath()));
                 fileUris.add(fileUri);
               }
@@ -795,5 +790,22 @@ public class SocialSharing extends CordovaPlugin {
 
   public static String sanitizeFilename(String name) {
     return name.replaceAll("[:\\\\/*?|<> ]", "_");
+  }
+
+  private String getFileName() {
+    String constructedFileName = "";
+    String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    constructedFileName = getAppName() + "-" + timeStamp;
+    return constructedFileName;
+  }
+
+  private String getAppName() {
+    try {
+      PackageManager packageManager = this.cordova.getActivity().getPackageManager();
+      ApplicationInfo app = packageManager.getApplicationInfo(this.cordova.getActivity().getPackageName(), 0);
+      return (String)packageManager.getApplicationLabel(app);
+    } catch (PackageManager.NameNotFoundException e) {
+      return "file";
+    }
   }
 }
