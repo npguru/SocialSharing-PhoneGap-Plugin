@@ -129,7 +129,9 @@ static NSString *const kShareOptionIPadCoordinates = @"iPadCoordinates";
     NSArray *applicationActivities = [[NSArray alloc] initWithObjects:activity, nil];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     if (subject != (id)[NSNull null] && subject != nil) {
-      [activityVC setValue:subject forKey:@"subject"];
+      dispatch_async(dispatch_get_main_queue(), ^{
+      	[activityVC setValue:subject forKey:@"subject"];
+      });
     }
 
     if ([activityVC respondsToSelector:(@selector(setCompletionWithItemsHandler:))]) {
